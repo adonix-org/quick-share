@@ -33,9 +33,11 @@ export default {
             );
         }
 
+        // Not serving favicon or other images for now
+        // Send back no content
         const url = new URL(request.url);
         if (url.pathname !== "/") {
-            return new Response(null, { status: 204 });
+            return getResponse(STATUS.NO_CONTENT);
         }
 
         const target = url.searchParams.get("link");
