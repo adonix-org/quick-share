@@ -26,11 +26,11 @@ export function getHtml(title: string, link: URL): string {
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:description" content="OG Description."/>
-  <meta property="og:image" content="https://developer.mozilla.org/mdn-social-share.d893525a4fb5fb1f67a2.png"/>
+  <meta property="og:image" content="https://www.tybusby.com/img/og-image.png"/>
   <meta property="og:image:type" content="image/png"/>
-  <meta property="og:image:height" content="1080"/>
-  <meta property="og:image:width" content="1920"/>
-  <meta property="og:image:alt" content="OG Image Alt"/>
+  <meta property="og:image:height" content="1200"/>
+  <meta property="og:image:width" content="630"/>
+  <meta property="og:image:alt" content="Share Image"/>
   <meta property="og:site_name" content="${title}"/>
   <meta http-equiv="refresh" content="0; URL='${link.toString()}'" />
 </head>
