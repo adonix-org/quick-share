@@ -20,11 +20,16 @@ export function getHtml(title: string, link: URL): string {
 <head>
   <meta charset="UTF-8" />
   <title>${title}</title>
+  <link rel="icon" href="https://www.tybusby.com/img/favicon.ico" sizes="any">
+  <meta http-equiv="refresh" content="0; URL='${link.toString()}'" />
 </head>
 <body>
   <p>
     <a href="${link.toString()}">${title}</a>
   </p>
+    <script>
+    window.location.href = "${link.toString()}";
+  </script>
 </body>
 </html>`;
 }

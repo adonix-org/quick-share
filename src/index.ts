@@ -39,15 +39,18 @@ export default {
             return getResponse(STATUS.NO_CONTENT);
         }
 
-        const title = url.searchParams.get("title") ?? "Shared Link";
         const target = url.searchParams.get("link");
         if (!target) {
             return getResponse(STATUS.BAD_REQUEST, "Missing link parameter");
         }
 
+        let title = url.searchParams.get("title");
+        if (!title || title.length === 0) {
+            title = "Shared With You";
+        }
+
         try {
             const link = new URL(target);
-
             const allowed = ALLOWED_LINK_HOSTS.some(
                 (hostname) =>
                     link.hostname === hostname ||
