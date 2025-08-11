@@ -26,7 +26,7 @@ export function getHtml(title: string, link: URL): string {
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:description" content="OG Description."/>
-  <meta property="og:image" content="https://www.tybusby.com/img/og-image.png"/>
+  <meta property="og:image" content="https://assets.adonix.org/img/og-image.png"/>
   <meta property="og:image:type" content="image/png"/>
   <meta property="og:image:height" content="1200"/>
   <meta property="og:image:width" content="630"/>
