@@ -33,10 +33,9 @@ export default {
             );
         }
 
-        // favicon.ico - return no content
         const url = new URL(request.url);
-        if (url.pathname === "/favicon.ico") {
-            return getResponse(STATUS.NO_CONTENT);
+        if (url.pathname !== "/") {
+            return new Response(null, { status: 204 });
         }
 
         const target = url.searchParams.get("link");
