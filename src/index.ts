@@ -15,36 +15,34 @@
  */
 
 import { getHtml } from "./html";
-import {
-    ContentType,
-    STATUS,
-    StatusCode,
-} from "./http-constants";
+import { ContentType, STATUS, StatusCode } from "./http-constants";
 
-const ALLOWED_LINK_HOSTS = [
-    "localhost",
-    "adonix.org",
-    "tybusby.com",
-];
+const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
 
 export default {
     async fetch(request, env, ctx): Promise<Response> {
-        const url = new URL(request.url);
+        if (request.method === "OPTIONS") {
+            // Handle preflight OPTIONS request
+            return getResponse(STATUS.NO_CONTENT);
+        }
 
-        const title = url.searchParams.get("title");
-        if (!title) {
+        if (request.method !== "GET") {
             return getResponse(
-                STATUS.BAD_REQUEST,
-                "Missing title parameter"
+                STATUS.METHOD_NOT_ALLOWED,
+                getError("Method not allowed")
             );
         }
 
+        // favicon.ico - return no content
+        const url = new URL(request.url);
+        if (url.pathname === "/favicon.ico") {
+            return getResponse(STATUS.NO_CONTENT);
+        }
+
+        const title = url.searchParams.get("title") ?? "Shared Link";
         const target = url.searchParams.get("link");
         if (!target) {
-            return getResponse(
-                STATUS.BAD_REQUEST,
-                "Missing link parameter"
-            );
+            return getResponse(STATUS.BAD_REQUEST, "Missing link parameter");
         }
 
         try {
@@ -57,17 +55,10 @@ export default {
             );
 
             if (!allowed) {
-                return getResponse(
-                    STATUS.FORBIDDEN,
-                    getError("Forbidden")
-                );
+                return getResponse(STATUS.FORBIDDEN, getError("Forbidden"));
             }
 
-            return getResponse(
-                STATUS.OK,
-                getHtml(title, link),
-                "text/html"
-            );
+            return getResponse(STATUS.OK, getHtml(title, link), "text/html");
         } catch (err) {
             return getResponse(
                 STATUS.BAD_REQUEST,
@@ -90,10 +81,7 @@ function getResponse(
     if (body) {
         const bodyBytes = new TextEncoder().encode(body);
         headers.set("Content-Type", contentType);
-        headers.set(
-            "Content-Length",
-            bodyBytes.length.toString()
-        );
+        headers.set("Content-Length", bodyBytes.length.toString());
     }
 
     return new Response(body, {
@@ -104,14 +92,8 @@ function getResponse(
 
 function addCorsHeaders(headers: Headers): Headers {
     headers.set("Access-Control-Allow-Origin", "*");
-    headers.set(
-        "Access-Control-Allow-Headers",
-        "Content-Type"
-    );
-    headers.set(
-        "Access-Control-Allow-Methods",
-        "GET, OPTIONS"
-    );
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
+    headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
     return headers;
 }
 
