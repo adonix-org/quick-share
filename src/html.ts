@@ -34,6 +34,7 @@ export function getHtml(title: string, link: URL): string {
   <meta property="og:image:width" content="630"/>
   <meta property="og:image:alt" content="Share Image"/>
   <meta property="og:site_name" content="${title}"/>
+  <meta http-equiv="refresh" content="0; url=${link.toString()}">
 </head>
 <body>
   <p>
