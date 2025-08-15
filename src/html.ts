@@ -20,13 +20,13 @@ export function getHtml(title: string, link: URL): string {
 <head>
   <meta charset="UTF-8" />
   <title>${title}</title>
-  <link rel="icon" href="https://www.tybusby.com/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <meta property="og:url" content="${link.toString()}"/>
   <meta property="og:title" content="${title}"/>
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:description" content="OG Description."/>
-  <meta property="og:image" content="https://assets.adonix.org/img/og-image.png"/>
+  <meta property="og:image" content="/og-image.png"/>
   <meta property="og:image:type" content="image/png"/>
   <meta property="og:image:height" content="1200"/>
   <meta property="og:image:width" content="630"/>
