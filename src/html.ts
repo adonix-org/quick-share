@@ -21,9 +21,7 @@ export function getHtml(title: string, link: URL): string {
   <meta charset="UTF-8" />
   <title>${title}</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
   <meta property="og:url" content="${link.toString()}"/>
   <meta property="og:title" content="${title}"/>
   <meta property="og:type" content="website"/>
