@@ -13,94 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { getHtml } from "./html";
-import { ContentType, STATUS, StatusCode } from "./http-constants";
-
-const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
+import { ShareWorker } from "./worker";
 
 export default {
-    async fetch(request, env, ctx): Promise<Response> {
-        if (request.method === "OPTIONS") {
-            // Handle preflight OPTIONS request
-            return getResponse(STATUS.NO_CONTENT);
-        }
-
-        if (request.method !== "GET") {
-            return getResponse(
-                STATUS.METHOD_NOT_ALLOWED,
-                getError("Method not allowed")
-            );
-        }
-
-        // Not serving favicon or other images for now
-        // Send back no content
-        const url = new URL(request.url);
-        if (url.pathname !== "/") {
-            return getResponse(STATUS.NO_CONTENT);
-        }
-
-        const target = url.searchParams.get("link");
-        if (!target) {
-            return getResponse(STATUS.BAD_REQUEST, "Missing link parameter");
-        }
-
-        let title = url.searchParams.get("title");
-        if (!title || title.length === 0) {
-            title = "Shared With You";
-        }
-
-        try {
-            const link = new URL(target);
-            const allowed = ALLOWED_LINK_HOSTS.some(
-                (hostname) =>
-                    link.hostname === hostname ||
-                    link.hostname.endsWith("." + hostname)
-            );
-
-            if (!allowed) {
-                return getResponse(STATUS.FORBIDDEN, getError("Forbidden"));
-            }
-
-            return getResponse(STATUS.OK, getHtml(title, link), "text/html");
-        } catch (err) {
-            return getResponse(
-                STATUS.BAD_REQUEST,
-                getError(`Invalid link: ${target}`)
-            );
-        }
-    },
+    fetch: (req: Request, env: Env, ctx: ExecutionContext) =>
+        new ShareWorker(env, ctx).fetch(req),
 } satisfies ExportedHandler<Env>;
-
-function getResponse(
-    status: StatusCode,
-    body: string | null = null,
-    contentType: ContentType = "application/json"
-): Response {
-    const headers = new Headers({
-        "Cache-Control": "public, max-age=86400, immutable",
-        "X-Content-Type-Options": "nosniff",
-    });
-
-    if (body) {
-        const bodyBytes = new TextEncoder().encode(body);
-        headers.set("Content-Type", contentType);
-        headers.set("Content-Length", bodyBytes.length.toString());
-    }
-
-    return new Response(body, {
-        status,
-        headers: addCorsHeaders(headers),
-    });
-}
-
-function addCorsHeaders(headers: Headers): Headers {
-    headers.set("Access-Control-Allow-Origin", "*");
-    headers.set("Access-Control-Allow-Headers", "Content-Type");
-    headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    return headers;
-}
-
-function getError(message: string) {
-    return JSON.stringify({ error: message });
-}
