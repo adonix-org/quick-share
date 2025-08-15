@@ -15,13 +15,14 @@
  */
 
 export function getHtml(title: string, link: URL): string {
-    return `<!DOCTYPE html>
+    return `
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>${title}</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta property="og:url" content="${link.toString()}"/>
   <meta property="og:title" content="${title}"/>
   <meta property="og:type" content="website"/>
@@ -33,15 +34,11 @@ export function getHtml(title: string, link: URL): string {
   <meta property="og:image:width" content="630"/>
   <meta property="og:image:alt" content="Share Image"/>
   <meta property="og:site_name" content="${title}"/>
-  <meta http-equiv="refresh" content="0; URL='${link.toString()}'" />
 </head>
 <body>
   <p>
     <a href="${link.toString()}">${title}</a>
   </p>
-    <script>
-    window.location.href = "${link.toString()}";
-  </script>
 </body>
 </html>`;
 }
