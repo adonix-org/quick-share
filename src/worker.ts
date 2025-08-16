@@ -18,8 +18,6 @@ import {
     BadRequest,
     Forbidden,
     HtmlResponse,
-    MimeType,
-    StatusCodes,
     WorkerBase,
 } from "@adonix.org/cf-worker-base";
 import { getHtml } from "./html";
