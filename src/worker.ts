@@ -15,7 +15,9 @@
  */
 
 import {
+    BadRequest,
     ErrorResult,
+    Forbidden,
     MimeType,
     StatusCodes,
     WorkerBase,
@@ -31,11 +33,7 @@ export class ShareWorker extends WorkerBase {
 
         const target = url.searchParams.get("link");
         if (!target) {
-            return new ErrorResult(
-                this,
-                StatusCodes.BAD_REQUEST,
-                "Missing link parameter"
-            ).response;
+            return this.getResponse(BadRequest, "Missing link parameter");
         }
 
         let title = url.searchParams.get("title");
@@ -45,26 +43,30 @@ export class ShareWorker extends WorkerBase {
 
         try {
             const link = new URL(target);
+
+            // Is hostname allowed to be shared?
             const allowed = ALLOWED_LINK_HOSTS.some(
                 (hostname) =>
                     link.hostname === hostname ||
                     link.hostname.endsWith("." + hostname)
             );
-
             if (!allowed) {
-                return new ErrorResult(this, StatusCodes.FORBIDDEN).response;
+                return this.getResponse(
+                    Forbidden,
+                    `Sharing ${link.hostname} is not allowed`
+                );
             }
 
             // Success!
-            return new WorkerResult(
-                this,
+            return this.getResponse(
+                WorkerResult,
                 getHtml(title, link),
                 StatusCodes.OK,
                 MimeType.HTML
-            ).response;
+            );
         } catch (err) {
-            return new ErrorResult(this, StatusCodes.BAD_REQUEST, String(err))
-                .response;
+            // Problem parsing the link.
+            return this.getResponse(BadRequest, String(err));
         }
     }
 }
