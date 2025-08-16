@@ -16,12 +16,11 @@
 
 import {
     BadRequest,
-    ErrorResult,
     Forbidden,
+    HtmlResponse,
     MimeType,
     StatusCodes,
     WorkerBase,
-    WorkerResult,
 } from "@adonix.org/cf-worker-base";
 import { getHtml } from "./html";
 
@@ -58,12 +57,7 @@ export class ShareWorker extends WorkerBase {
             }
 
             // Success!
-            return this.getResponse(
-                WorkerResult,
-                getHtml(title, link),
-                StatusCodes.OK,
-                MimeType.HTML
-            );
+            return this.getResponse(HtmlResponse, getHtml(title, link));
         } catch (err) {
             // Problem parsing the link.
             return this.getResponse(BadRequest, String(err));
