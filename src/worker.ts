@@ -25,7 +25,7 @@ import { getHtml } from "./html";
 const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
 
 export class ShareWorker extends BasicWorker {
-    protected override async get(request: Request): Promise<Response> {
+    protected override get(request: Request): Response {
         const url = new URL(request.url);
 
         const target = url.searchParams.get("link");
