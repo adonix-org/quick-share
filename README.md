@@ -1,2 +1,2 @@
 # 🔗 share-link
-A Cloudflare worker for sharing adonix.org links.
+A Cloudflare worker for sharing links.
