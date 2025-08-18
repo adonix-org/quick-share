@@ -25,15 +25,13 @@ import { getHtml } from "./html";
 const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
 
 export class ShareWorker extends BasicWorker {
-    protected override get(request: Request): Response {
-        const url = new URL(request.url);
-
-        const target = url.searchParams.get("link");
+    protected override get(): Response {
+        const target = this.requestUrl.searchParams.get("link");
         if (!target) {
             return this.getResponse(BadRequest, "Missing link parameter");
         }
 
-        let title = url.searchParams.get("title");
+        let title = this.requestUrl.searchParams.get("title");
         if (!title || title.length === 0) {
             title = "Shared With You";
         }
