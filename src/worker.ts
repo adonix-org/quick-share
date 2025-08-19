@@ -33,10 +33,8 @@ export class ShareWorker extends BasicWorker {
             return this.getResponse(BadRequest, "Missing link parameter");
         }
 
-        let title = url.searchParams.get("title");
-        if (!title || title.length === 0) {
-            title = "Shared With You";
-        }
+        const title =
+            url.searchParams.get("title")?.trim() || "Shared With You";
 
         try {
             const link = new URL(target);
