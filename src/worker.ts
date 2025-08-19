@@ -26,12 +26,14 @@ const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
 
 export class ShareWorker extends BasicWorker {
     protected override async get(): Promise<Response> {
-        const target = this.requestUrl.searchParams.get("link");
+        const url = new URL(this.request.url);
+
+        const target = url.searchParams.get("link");
         if (!target) {
             return this.getResponse(BadRequest, "Missing link parameter");
         }
 
-        let title = this.requestUrl.searchParams.get("title");
+        let title = url.searchParams.get("title");
         if (!title || title.length === 0) {
             title = "Shared With You";
         }
