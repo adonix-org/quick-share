@@ -19,10 +19,18 @@ import {
     Forbidden,
     HtmlResponse,
     BasicWorker,
+    CacheControl,
 } from "@adonix.org/cloud-spark";
 import { getHtml } from "./html";
 
 const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
+
+const NO_CACHE: CacheControl = {
+    "no-cache": true,
+    "no-store": true,
+    "must-revalidate": true,
+    "max-age": 0,
+};
 
 export class ShareWorker extends BasicWorker {
     protected override async get(): Promise<Response> {
@@ -53,7 +61,7 @@ export class ShareWorker extends BasicWorker {
             }
 
             // Success!
-            return this.getResponse(HtmlResponse, getHtml(title, link));
+            return this.getResponse(HtmlResponse, getHtml(title, link), NO_CACHE);
         } catch (err) {
             // Problem parsing the link.
             return this.getResponse(BadRequest, String(err));
