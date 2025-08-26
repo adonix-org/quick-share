@@ -15,7 +15,4 @@
  */
 import { ShareWorker } from "./worker";
 
-export default {
-    fetch: (request: Request, env: Env, ctx: ExecutionContext) =>
-        new ShareWorker(request, env, ctx).fetch(),
-} satisfies ExportedHandler<Env>;
+export default ShareWorker.ignite();
