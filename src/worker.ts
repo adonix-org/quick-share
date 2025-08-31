@@ -60,8 +60,9 @@ export class ShareWorker extends BasicWorker {
                 CacheControl.DISABLE
             );
         } catch (err) {
-            // Problem parsing the link.
-            return this.getResponse(BadRequest, String(err));
+            console.error("Title:", title, "Target:", target, err);
+            // Problem parsing the target link.
+            return this.getResponse(BadRequest, `Target: ${target}`);
         }
     }
 }
