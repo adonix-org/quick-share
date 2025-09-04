@@ -22,5 +22,6 @@
     "observability": {
         "enabled": true
     },
+    "preview_urls": false,
     "assets": { "directory": "./public/", "binding": "ASSETS" }
 }

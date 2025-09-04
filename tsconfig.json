@@ -36,8 +36,8 @@
 
         /* Skip type checking all .d.ts files. */
         "skipLibCheck": true,
-        "types": ["./types/worker-configuration.d.ts"]
+        "types": ["./types/wrangler.d.ts"]
     },
     "exclude": ["test"],
-    "include": ["types/worker-configuration.d.ts", "src/**/*.ts"]
+    "include": ["types", "src/**/*.ts"]
 }
