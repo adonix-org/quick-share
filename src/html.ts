@@ -36,7 +36,7 @@ export function getHtml(title: string, link: string): string {
   <meta property="og:site_name" content="${title}"/>
 
   <!-- Redirect users -->
-  <!-- <meta http-equiv="refresh" content="0; url=${link}"> -->
+  <meta http-equiv="refresh" content="0; url=${link}">
 </head>
 <body>
   <h3>
