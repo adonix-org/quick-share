@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
-import {
-    BadRequest,
-    Forbidden,
-    HtmlResponse,
-    BasicWorker,
-    CacheControl,
-} from "@adonix.org/cloud-spark";
-import { getHtml } from "./html";
+import { BasicWorker } from "@adonix.org/cloud-spark";
+import { ErrorPage, SuccessPage } from "./responses";
 
 const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
 
 export class ShareWorker extends BasicWorker {
     protected override async get(): Promise<Response> {
-        const url = new URL(this.request.url);
+        const source = new URL(this.request.url);
 
-        const target = url.searchParams.get("link");
+        const target = source.searchParams.get("link");
         if (!target) {
-            return this.getResponse(BadRequest, "Missing link parameter");
+            return this.getResponse(ErrorPage);
         }
 
         const title =
-            url.searchParams.get("title")?.trim() || "Shared With You";
+            source.searchParams.get("title")?.trim() || "Shared With You";
 
         try {
             const link = new URL(target);
@@ -47,22 +41,15 @@ export class ShareWorker extends BasicWorker {
                     link.hostname.endsWith("." + hostname)
             );
             if (!allowed) {
-                return this.getResponse(
-                    Forbidden,
-                    `Sharing ${link.hostname} is not allowed`
-                );
+                return this.getResponse(ErrorPage);
             }
 
             // Success!
-            return this.getResponse(
-                HtmlResponse,
-                getHtml(title, link),
-                CacheControl.DISABLE
-            );
+            return this.getResponse(SuccessPage, title, link.toString());
         } catch (err) {
-            console.error("Title:", title, "Target:", target, err);
             // Problem parsing the target link.
-            return this.getResponse(BadRequest, `Target: ${target}`);
+            console.error("Title:", title, "Target:", target, err);
+            return this.getResponse(ErrorPage);
         }
     }
 }

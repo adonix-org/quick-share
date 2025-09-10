@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-export function getHtml(title: string, link: URL): string {
+import { encode } from "he";
+
+export function getHtml(title: string, link: string): string {
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +25,7 @@ export function getHtml(title: string, link: URL): string {
   <title>${title}</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <meta property="og:url" content="${link.toString()}"/>
+  <meta property="og:url" content="https://share.adonix.org"/>
   <meta property="og:title" content="${title}"/>
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="en_US"/>
@@ -34,12 +36,30 @@ export function getHtml(title: string, link: URL): string {
   <meta property="og:image:width" content="630"/>
   <meta property="og:image:alt" content="Share Image"/>
   <meta property="og:site_name" content="${title}"/>
-  <meta http-equiv="refresh" content="0; url=${link.toString()}">
+
+  <!-- Redirect users -->
+  <-- <meta http-equiv="refresh" content="0; url=${link}"> -->
 </head>
 <body>
-  <p>
-    <a href="${link.toString()}">${title}</a>
-  </p>
+  <h3>
+    Redirecting...
+  </h3>
+</body>
+</html>`;
+}
+
+export function getErrorHtml(): string {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta charset="UTF-8">
+    <title>Invalid Link</title>
+</head>
+<body>
+    <p>🛑 The link shared with you is invalid or not allowed.</p>
 </body>
 </html>`;
 }
