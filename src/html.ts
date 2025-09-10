@@ -39,9 +39,6 @@ export function getHtml(title: string, link: string): string {
   <meta http-equiv="refresh" content="0; url=${link}">
 </head>
 <body>
-  <h3>
-    <a href="${link}">Redirecting...</a>
-  </h3>
 </body>
 </html>`;
 }
