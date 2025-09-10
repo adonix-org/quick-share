@@ -18,8 +18,6 @@ import { BasicWorker, GET, Method } from "@adonix.org/cloud-spark";
 import { ErrorPage, SuccessPage } from "./responses";
 import { isValidRedirect } from "./utils";
 
-export const ALLOWED_LINK_HOSTS = ["adonix.org", "tybusby.com"];
-
 export class ShareWorker extends BasicWorker {
     public override getAllowedMethods(): Method[] {
         return [GET];

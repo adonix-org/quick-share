@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ALLOWED_LINK_HOSTS } from "./worker";
+const ALLOWED_LINK_HOSTS = ["adonix.org", "tybusby.com"];
 
 const SAFE_URL_REGEX = /^[A-Za-z0-9-._~:/?&=%#]+$/;
 
