@@ -57,7 +57,7 @@ export function getErrorHtml(): string {
     <title>Invalid Link</title>
 </head>
 <body>
-    <h3>🛑 The link shared with you is invalid or not allowed.</h3>
+    <h3>🚫 The link shared with you is invalid or not allowed.</h3>
 </body>
 </html>`;
 }
