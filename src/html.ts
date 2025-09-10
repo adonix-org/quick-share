@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-import { encode } from "he";
-
 export function getHtml(title: string, link: string): string {
     return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>${title}</title>
+  <title>Redirecting...</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta property="og:url" content="https://share.adonix.org"/>

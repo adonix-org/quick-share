@@ -16,8 +16,9 @@
 
 import { BasicWorker } from "@adonix.org/cloud-spark";
 import { ErrorPage, SuccessPage } from "./responses";
+import { isValidRedirect } from "./utils";
 
-const ALLOWED_LINK_HOSTS = ["localhost", "adonix.org", "tybusby.com"];
+export const ALLOWED_LINK_HOSTS = ["adonix.org", "tybusby.com"];
 
 export class ShareWorker extends BasicWorker {
     protected override async get(): Promise<Response> {
@@ -31,25 +32,11 @@ export class ShareWorker extends BasicWorker {
         const title =
             source.searchParams.get("title")?.trim() || "Shared With You";
 
-        try {
-            const link = new URL(target);
-
-            // Is hostname allowed to be shared?
-            const allowed = ALLOWED_LINK_HOSTS.some(
-                (hostname) =>
-                    link.hostname === hostname ||
-                    link.hostname.endsWith("." + hostname)
-            );
-            if (!allowed) {
-                return this.getResponse(ErrorPage);
-            }
-
-            // Success!
-            return this.getResponse(SuccessPage, title, link.toString());
-        } catch (err) {
-            // Problem parsing the target link.
-            console.error("Title:", title, "Target:", target, err);
+        if (!isValidRedirect(target)) {
             return this.getResponse(ErrorPage);
         }
+
+        // Success!
+        return this.getResponse(SuccessPage, title, target);
     }
 }

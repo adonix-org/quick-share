@@ -28,7 +28,7 @@ class SafeHtml extends HtmlResponse {
         super(worker, html, CacheControl.DISABLE);
         this.headers.set(
             HttpHeader.CONTENT_SECURITY_POLICY,
-            "default-src 'none'; img-src 'self'; style-src 'self';"
+            "default-src 'none'; script-src 'none'; img-src 'self'; style-src 'self';"
         );
     }
 }
