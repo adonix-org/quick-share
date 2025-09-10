@@ -16,21 +16,34 @@
 
 import { ALLOWED_LINK_HOSTS } from "./worker";
 
+const SAFE_URL_REGEX = /^[A-Za-z0-9-._~:/?&=%#]+$/;
+
 /**
- * Validates that a URL is safe for redirection.
- * - Must be a valid absolute URL
- * - Must use https
- * - Must match an allowed hostname
+ * Validates a redirect URL to ensure it is safe for use in the ShareWorker.
+ *
+ * Rules:
+ * - Must only contain safe URL characters (A-Z, a-z, 0-9, -._~:/?&=%#)
+ * - Must be a valid URL parseable by `new URL()`
+ * - Must use HTTPS (`https:`)
+ * - Hostname must be in the allowed list (or a subdomain of an allowed host)
+ *
+ * @param {string} raw - The URL string to validate.
+ * @returns {boolean} True if the URL is safe and allowed, false otherwise.
  */
-export function isValidRedirect(urlStr: string): boolean {
+export function isValidRedirect(raw: string): boolean {
     try {
-        const url = new URL(urlStr);
+        const link = raw.trim();
+
+        // Check for only safe URL characters
+        if (!SAFE_URL_REGEX.test(link)) return false;
+
+        const url = new URL(link);
 
         // Only allow https
         if (url.protocol !== "https:") return false;
 
-        // Check hostname whitelist
-        const hostname = url.hostname.toLowerCase().trim();
+        // Check hostname whitelist (including subdomains)
+        const hostname = url.hostname.toLowerCase();
         return ALLOWED_LINK_HOSTS.some(
             (allowed) =>
                 hostname === allowed || hostname.endsWith("." + allowed)

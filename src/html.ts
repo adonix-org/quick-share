@@ -36,11 +36,11 @@ export function getHtml(title: string, link: string): string {
   <meta property="og:site_name" content="${title}"/>
 
   <!-- Redirect users -->
-  <-- <meta http-equiv="refresh" content="0; url=${link}"> -->
+  <!-- <meta http-equiv="refresh" content="0; url=${link}"> -->
 </head>
 <body>
   <h3>
-    Redirecting...
+    <a href="${link}">Redirecting...</a>
   </h3>
 </body>
 </html>`;
@@ -57,7 +57,7 @@ export function getErrorHtml(): string {
     <title>Invalid Link</title>
 </head>
 <body>
-    <p>🛑 The link shared with you is invalid or not allowed.</p>
+    <h3>🛑 The link shared with you is invalid or not allowed.</h3>
 </body>
 </html>`;
 }

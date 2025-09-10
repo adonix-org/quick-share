@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-import { BasicWorker } from "@adonix.org/cloud-spark";
+import { BasicWorker, GET, Method } from "@adonix.org/cloud-spark";
 import { ErrorPage, SuccessPage } from "./responses";
 import { isValidRedirect } from "./utils";
 
 export const ALLOWED_LINK_HOSTS = ["adonix.org", "tybusby.com"];
 
 export class ShareWorker extends BasicWorker {
+    public override getAllowedMethods(): Method[] {
+        return [GET];
+    }
+
     protected override async get(): Promise<Response> {
         const source = new URL(this.request.url);
 
         const target = source.searchParams.get("link");
-        if (!target) {
+        if (!target || !isValidRedirect(target)) {
             return this.getResponse(ErrorPage);
         }
 
         const title =
             source.searchParams.get("title")?.trim() || "Shared With You";
-
-        if (!isValidRedirect(target)) {
-            return this.getResponse(ErrorPage);
-        }
 
         // Success!
         return this.getResponse(SuccessPage, title, target);
