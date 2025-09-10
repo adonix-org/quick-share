@@ -18,7 +18,7 @@ import { BasicWorker, GET, Method } from "@adonix.org/cloud-spark";
 import { ErrorPage, SuccessPage } from "./responses";
 import { isValidRedirect } from "./utils";
 
-export class ShareWorker extends BasicWorker {
+export class QuickShare extends BasicWorker {
     public override getAllowedMethods(): Method[] {
         return [GET];
     }

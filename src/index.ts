@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import { ShareWorker } from "./worker";
+import { QuickShare } from "./worker";
 
-export default ShareWorker.ignite();
+export default QuickShare.ignite();
