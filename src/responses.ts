@@ -35,14 +35,12 @@ class SafeHtml extends HtmlResponse {
 
 export class SuccessPage extends SafeHtml {
     constructor(worker: Worker, title: string, link: string) {
-        const html = getHtml(encode(title), encode(link));
-        super(worker, html);
+        super(worker, getHtml(encode(title), encode(link)));
     }
 }
 
 export class ErrorPage extends SafeHtml {
     constructor(worker: Worker) {
-        const html = getErrorHtml();
-        super(worker, html);
+        super(worker, getErrorHtml());
     }
 }
