@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import { QuickShare } from "./worker";
+import { QuickShare } from "./quick-share";
 
 export default QuickShare.ignite();
