@@ -18,14 +18,13 @@ import {
     CacheControl,
     HtmlResponse,
     HttpHeader,
-    Worker,
 } from "@adonix.org/cloud-spark";
 import { getErrorHtml, getHtml } from "./html";
 import { encode } from "he";
 
 class SafeHtml extends HtmlResponse {
-    constructor(worker: Worker, html: string) {
-        super(worker, html, CacheControl.DISABLE);
+    constructor(html: string) {
+        super(html, CacheControl.DISABLE);
         this.headers.set(
             HttpHeader.CONTENT_SECURITY_POLICY,
             "default-src 'none'; script-src 'none'; img-src 'self'; style-src 'self';"
@@ -34,13 +33,13 @@ class SafeHtml extends HtmlResponse {
 }
 
 export class SuccessPage extends SafeHtml {
-    constructor(worker: Worker, title: string, link: string) {
-        super(worker, getHtml(encode(title), encode(link)));
+    constructor(title: string, link: string) {
+        super(getHtml(encode(title), encode(link)));
     }
 }
 
 export class ErrorPage extends SafeHtml {
-    constructor(worker: Worker) {
-        super(worker, getErrorHtml());
+    constructor() {
+        super(getErrorHtml());
     }
 }
