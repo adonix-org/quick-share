@@ -31,8 +31,7 @@ export class QuickShare extends BasicWorker {
             return this.getResponse(ErrorPage);
         }
 
-        const title =
-            source.searchParams.get("title")?.trim() || "Shared With You";
+        const title = source.searchParams.get("title")?.trim() || "Shared With You";
 
         // Success!
         return this.getResponse(SuccessPage, title, target);

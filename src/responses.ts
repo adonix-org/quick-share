@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-import {
-    CacheControl,
-    HtmlResponse,
-    HttpHeader,
-} from "@adonix.org/cloud-spark";
+import { CacheControl, HtmlResponse, HttpHeader } from "@adonix.org/cloud-spark";
 import { getErrorHtml, getHtml } from "./html";
 import { encode } from "he";
 

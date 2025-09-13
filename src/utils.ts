@@ -45,8 +45,7 @@ export function isValidRedirect(raw: string): boolean {
         // Check hostname whitelist (including subdomains)
         const hostname = url.hostname.toLowerCase();
         return ALLOWED_LINK_HOSTS.some(
-            (allowed) =>
-                hostname === allowed || hostname.endsWith("." + allowed)
+            (allowed) => hostname === allowed || hostname.endsWith("." + allowed)
         );
     } catch {
         return false;
