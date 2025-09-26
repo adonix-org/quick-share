@@ -28,12 +28,12 @@ export class QuickShare extends BasicWorker {
 
         const target = source.searchParams.get("link");
         if (!target || !isValidRedirect(target)) {
-            return this.getResponse(ErrorPage);
+            return this.response(ErrorPage);
         }
 
         const title = source.searchParams.get("title")?.trim() || "Shared With You";
 
         // Success!
-        return this.getResponse(SuccessPage, title, target);
+        return this.response(SuccessPage, title, target);
     }
 }
