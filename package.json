@@ -14,10 +14,10 @@
         "@types/he": "^1.2.3",
         "typescript": "^5.9.2",
         "vitest": "~3.2.4",
-        "wrangler": "^4.40.1"
+        "wrangler": "^4.40.2"
     },
     "dependencies": {
-        "@adonix.org/cloud-spark": "^0.0.159",
+        "@adonix.org/cloud-spark": "^0.0.162",
         "he": "^1.2.0"
     }
 }
