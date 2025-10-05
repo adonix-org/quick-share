@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 
-import { CacheControl, HtmlResponse, HttpHeader } from "@adonix.org/cloud-spark";
+import { CacheControl, HtmlResponse } from "@adonix.org/cloud-spark";
 import { getErrorHtml, getHtml } from "./html";
 import { encode } from "he";
 
-class SafeHtml extends HtmlResponse {
+class NoCacheHtml extends HtmlResponse {
     constructor(html: string) {
         super(html, CacheControl.DISABLE);
-        this.headers.set(
-            HttpHeader.CONTENT_SECURITY_POLICY,
-            "default-src 'none'; script-src 'none'; img-src 'self'; style-src 'self';"
-        );
     }
 }
 
-export class SuccessPage extends SafeHtml {
+export class SuccessPage extends NoCacheHtml {
     constructor(title: string, link: string) {
         super(getHtml(encode(title), encode(link)));
     }
 }
 
-export class ErrorPage extends SafeHtml {
+export class ErrorPage extends NoCacheHtml {
     constructor() {
         super(getErrorHtml());
     }
