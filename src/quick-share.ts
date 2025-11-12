@@ -23,7 +23,7 @@ export class QuickShare extends BasicWorker {
         return [GET];
     }
 
-    protected override async get(): Promise<Response> {
+    protected override get(): Promise<Response> {
         const source = new URL(this.request.url);
 
         const target = source.searchParams.get("link");

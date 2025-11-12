@@ -12,10 +12,10 @@
     "devDependencies": {
         "@types/he": "^1.2.3",
         "typescript": "^5.9.3",
-        "wrangler": "^4.45.0"
+        "wrangler": "^4.47.0"
     },
     "dependencies": {
-        "@adonix.org/cloud-spark": "^0.0.183",
+        "@adonix.org/cloud-spark": "^0.0.184",
         "he": "^1.2.0"
     }
 }
