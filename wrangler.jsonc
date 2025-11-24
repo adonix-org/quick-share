@@ -18,7 +18,7 @@
     "$schema": "node_modules/wrangler/config-schema.json",
     "name": "quick-share",
     "main": "src/index.ts",
-    "compatibility_date": "2025-08-10",
+    "compatibility_date": "2025-11-22",
     "observability": {
         "enabled": true
     },
