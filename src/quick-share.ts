@@ -26,10 +26,11 @@ export class QuickShare extends BasicWorker {
     protected override get(): Promise<Response> {
         const source = new URL(this.request.url);
 
-        const target = source.searchParams.get("link");
-        if (!target || !isValidRedirect(target)) {
-            return this.response(ErrorPage);
-        }
+        const link = source.searchParams.get("link");
+        if (!link) return this.response(ErrorPage);
+
+        const target = decodeURIComponent(link);
+        if (!isValidRedirect(target)) return this.response(ErrorPage);
 
         const title = source.searchParams.get("title")?.trim() || "Shared With You";
 
