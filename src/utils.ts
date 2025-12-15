@@ -51,3 +51,12 @@ export function isValidRedirect(raw: string): boolean {
         return false;
     }
 }
+
+/** Escapes &, <, >, ", ' for HTML text content or attribute values */
+export const escapeHtml = (str: string) =>
+    str
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");

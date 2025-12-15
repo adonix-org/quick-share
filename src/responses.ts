@@ -16,7 +16,7 @@
 
 import { CacheControl, HtmlResponse } from "@adonix.org/cloud-spark";
 import { getErrorHtml, getHtml } from "./html";
-import { encode } from "he";
+import { escapeHtml } from "./utils";
 
 class NoCacheHtml extends HtmlResponse {
     constructor(html: string) {
@@ -26,7 +26,7 @@ class NoCacheHtml extends HtmlResponse {
 
 export class SuccessPage extends NoCacheHtml {
     constructor(title: string, link: string) {
-        super(getHtml(encode(title), encode(link)));
+        super(getHtml(escapeHtml(title), escapeHtml(link)));
     }
 }
 
