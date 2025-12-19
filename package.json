@@ -3,12 +3,12 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
+        "types": "mkdir -p ./types && wrangler types --config wrangler.jsonc ./types/cloudflare.d.ts",
+        "prebuild": "npm run types",
+        "build": "wrangler build",
         "deploy": "tsc && wrangler deploy",
         "dev": "wrangler dev",
-        "build": "wrangler build",
-        "start": "wrangler dev",
-        "test": "vitest",
-        "types": "wrangler types ./types/wrangler.d.ts"
+        "start": "wrangler dev"
     },
     "devDependencies": {
         "typescript": "^5.9.3",
